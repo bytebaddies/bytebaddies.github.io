@@ -7,10 +7,10 @@ import lyricsgenius
 app = Flask(__name__)
 CORS(app)
 
-@app.route('/lyrics/<title>/<artist>', methods=['GET'])
-def get_lyrics(title, artist):
+@app.route('/lyrics/<title>', methods=['GET'])
+def get_lyrics(title):
     genius = lyricsgenius.Genius("UKqAiMpW9BGFlLf2Ohk0htI6tPRlwoQvdoe5t_w69bR98_Ik0gK7kaIbliFbbDFI")
-    song = genius.search_song(title, artist)
+    song = genius.search_song(title)
     return jsonify({
             "lyrics": song.lyrics
     })
