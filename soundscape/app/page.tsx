@@ -3,10 +3,6 @@ import React, {useEffect, useState} from 'react';
 import Image from "next/image";
 import OpenAI from "openai";
 
-// const openai = new OpenAI({
-//   apiKey: "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"
-// });
-
 export default function Home() {
   const [inputValue, setInputValue] = useState('');
   const [lyrics, setLyrics] = useState<string>('');

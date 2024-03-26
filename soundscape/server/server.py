@@ -7,9 +7,6 @@ import lyricsgenius
 app = Flask(__name__)
 CORS(app)
 
-# OpenAI.api_key = "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"
-# client = OpenAI()
-# client = OpenAI(api_key="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")
 client = OpenAI(api_key="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")
 
 @app.route('/lyrics/<title>', methods=['GET'])
