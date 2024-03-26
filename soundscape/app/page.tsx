@@ -1,10 +1,16 @@
 "use client"
 import React, {useEffect, useState} from 'react';
 import Image from "next/image";
+import OpenAI from "openai";
+
+// const openai = new OpenAI({
+//   apiKey: "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"
+// });
 
 export default function Home() {
   const [inputValue, setInputValue] = useState('');
   const [lyrics, setLyrics] = useState<string>('');
+  const [imageUrl, setImageUrl] = useState<string>('');
 
   const handleInputChange = (event: { target: { value: React.SetStateAction<string>; }; }) => {
     setInputValue(event.target.value);
@@ -21,6 +27,19 @@ export default function Home() {
       });
   };
 
+  const handleLucky = async () => {
+    fetch('http://localhost:8080/image')
+      .then(response => response.json())
+      .then(data => {
+        console.log(data.image)
+        setImageUrl(data.image);
+      });
+    // const response = await fetch('/image');
+    // const data = await response.json();
+    // console.log(data);
+    // setImageUrl(data);
+  };
+
   // useEffect(() => {
   //   // console.log("hello")
   //   var name:string = "http://localhost:8080/lyrics/" + inputValue; 
@@ -31,15 +50,7 @@ export default function Home() {
   //       setLyrics(data.lyrics);
   //     });
   // }, []);
-
-  // return (
-  //   <main className="flex bg-[#2b2b2b] h-screen w-screen">
-  //     <div>
-  //       <h1>Lyrics</h1>
-  //       <h1>{lyrics}</h1>
-  //     </div>
-  //   </main>
-  // );
+  
   return (
     <main className="relative flex flex-col bg-[#2b2b2b] h-screen w-screen place-items-center justify-center">
       <div className=" flex justify-center place-items-center grid grid-cols-1 grid-rows-3 w-fit h-fit">
@@ -64,7 +75,7 @@ export default function Home() {
         <button className="flex justify-center h-fit font-archivo font-normal text-[#2B2B2B] bg-[#D7C2A1] w-fit py-2 px-16 rounded-md" onClick={() => {handleSearch();}}>
           Search
         </button>
-        <button className="flex justify-center h-fit font-archivo font-normal text-[#E4E2DE] bg-[#A12D1E] w-fit py-2 px-10 rounded-md">
+        <button className="flex justify-center h-fit font-archivo font-normal text-[#E4E2DE] bg-[#A12D1E] w-fit py-2 px-10 rounded-md" onClick={() => {handleLucky();}}>
           i'm feeling lucky
         </button>
       </div>

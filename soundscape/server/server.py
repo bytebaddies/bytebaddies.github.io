@@ -1,11 +1,16 @@
 from flask import Flask, jsonify
 from flask_cors import CORS
+from openai import OpenAI
 import lyricsgenius
-
 
 
 app = Flask(__name__)
 CORS(app)
+
+# OpenAI.api_key = "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"
+# client = OpenAI()
+# client = OpenAI(api_key="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")
+client = OpenAI(api_key="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")
 
 @app.route('/lyrics/<title>', methods=['GET'])
 def get_lyrics(title):
@@ -13,6 +18,20 @@ def get_lyrics(title):
     song = genius.search_song(title)
     return jsonify({
             "lyrics": song.lyrics
+    })
+
+@app.route('/image', methods=['GET'])
+def get_image():
+    response = client.images.generate(
+    model="dall-e-3",
+    prompt="a sea otter with a pearl earring",
+    size="1024x1024",
+    quality="standard",
+    n=1,
+    )
+    image_url = response.data[0].url
+    return jsonify({
+        "image": image_url
     })
     
 if __name__ == "__main__":
