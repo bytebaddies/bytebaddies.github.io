@@ -2,16 +2,24 @@ from flask import Flask, jsonify
 from flask_cors import CORS
 from openai import OpenAI
 import lyricsgenius
+import os
+from dotenv import load_dotenv
 
+# Load environment variables from .env file
+load_dotenv()
+
+# Fetch API keys from environment variables
+openai_api_key = os.getenv("OPENAI_API_KEY")
+genius_api_key = os.getenv("GENIUS_API_KEY")
 
 app = Flask(__name__)
 CORS(app)
 
-client = OpenAI(api_key="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")
+client = OpenAI(api_key=openai_api_key)
 
 @app.route('/lyrics/<title>', methods=['GET'])
 def get_lyrics(title):
-    genius = lyricsgenius.Genius("UKqAiMpW9BGFlLf2Ohk0htI6tPRlwoQvdoe5t_w69bR98_Ik0gK7kaIbliFbbDFI")
+    genius = lyricsgenius.Genius(genius_api_key)
     song = genius.search_song(title)
     return jsonify({
             "lyrics": song.lyrics
