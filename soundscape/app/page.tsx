@@ -69,13 +69,14 @@ export default function Home() {
       />
 
       <div className="flex justify-center justify-items-center grid grid-cols-2 mt-[1rem]">
-        <button className="flex justify-center h-fit font-archivo font-normal text-[#2B2B2B] bg-[#D7C2A1] w-fit py-2 px-16 rounded-md" onClick={() => {handleSearch();}}>
+        <button className="flex justify-center h-fit font-archivo font-normal text-[#2B2B2B] bg-[#D7C2A1] w-fit py-2 px-16 rounded-md" onClick={() => {handleLucky();}}>
           Search
         </button>
         <button className="flex justify-center h-fit font-archivo font-normal text-[#E4E2DE] bg-[#A12D1E] w-fit py-2 px-10 rounded-md" onClick={() => {handleLucky();}}>
           i'm feeling lucky
         </button>
-      </div>
+        <img src={imageUrl} alt="Generated Image" />
+              </div>
       </div>
 
       <Image 
