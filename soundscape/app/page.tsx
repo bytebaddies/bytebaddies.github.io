@@ -24,7 +24,8 @@ export default function Home() {
   };
 
   const handleLucky = async () => {
-    fetch('http://localhost:8080/image')
+    var name:string = "http://localhost:8080/image/" + inputValue; 
+    fetch(name)
       .then(response => response.json())
       .then(data => {
         console.log(data.image)
