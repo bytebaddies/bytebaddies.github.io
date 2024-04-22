@@ -9,9 +9,14 @@ export default function Loading() {
 
   const searchParams = useSearchParams();
   const encodedUrl = searchParams.get("imageUrl")!;
+  const router = useRouter();
+
+  const handleClick = async () => {
+    router.back();
+  }
   
   return (
-    <main className="relative flex flex-col bg-[#2b2b2b] h-screen w-screen">
+    <main className="relative flex flex-col bg-[#2b2b2b] h-screen w-screen" onClick={handleClick}>
       <div className="mt-10 ml-10">
         <Image
           src="/soundscape-logo.png"
