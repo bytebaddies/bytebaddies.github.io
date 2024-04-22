@@ -5,7 +5,6 @@ import Link from 'next/link';
 import OpenAI from "openai";
 
 export default function Loading() {
-
   
   return (
     <main className="relative flex flex-col bg-[#2b2b2b] h-screen w-screen">

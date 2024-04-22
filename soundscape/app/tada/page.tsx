@@ -3,52 +3,12 @@ import React, {useEffect, useState} from 'react';
 import Image from "next/image";
 import Link from 'next/link';
 import OpenAI from "openai";
+import { useRouter, useSearchParams } from 'next/navigation';
 
 export default function Loading() {
 
-  const [inputValue, setInputValue] = useState('');
-  const [lyrics, setLyrics] = useState<string>('');
-  const [imageUrl, setImageUrl] = useState<string>('');
-
-  const handleInputChange = (event: { target: { value: React.SetStateAction<string>; }; }) => {
-    setInputValue(event.target.value);
-    // console.log(inputValue)
-  };
-
-  const handleSearch = async () => {
-    var name:string = "http://localhost:8080/lyrics/" + inputValue; 
-    fetch(name)
-      .then(response => response.json())
-      .then(data => {
-        console.log(data.lyrics)
-        setLyrics(data.lyrics);
-      });
-  };
-
-  const handleLucky = async () => {
-    var name:string = "http://localhost:8080/image/" + inputValue; 
-    fetch(name)
-      .then(response => response.json())
-      .then(data => {
-        console.log(data.image)
-        setImageUrl(data.image);
-      });
-    // const response = await fetch('/image');
-    // const data = await response.json();
-    // console.log(data);
-    // setImageUrl(data);
-  };
-
-  // useEffect(() => {
-  //   // console.log("hello")
-  //   var name:string = "http://localhost:8080/lyrics/" + inputValue; 
-  //   fetch(name)
-  //     .then(response => response.json())
-  //     .then(data => {
-  //       console.log(data.lyrics)
-  //       setLyrics(data.lyrics);
-  //     });
-  // }, []);
+  const searchParams = useSearchParams();
+  const encodedUrl = searchParams.get("imageUrl")!;
   
   return (
     <main className="relative flex flex-col bg-[#2b2b2b] h-screen w-screen">
@@ -62,7 +22,7 @@ export default function Loading() {
         />
       </div>
 
-      <img src={imageUrl} alt="Generated Image" />
+      <img src={encodedUrl} alt="Generated Image" />
 
       <div className="relative flex place-items-center justify-center h-screen">
         <Image 
