@@ -27,7 +27,7 @@ export default function Loading() {
         />
       </div>
 
-      <img src={encodedUrl} alt="Generated Image" />
+      <img src={encodedUrl} alt="Generated Image" className='h-3/4 w-3/4 m-auto' />
 
       <div className="relative flex place-items-center justify-center h-screen">
         <Image 

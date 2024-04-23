@@ -3,6 +3,7 @@ from flask_cors import CORS
 from openai import OpenAI
 import lyricsgenius
 import os
+import random
 from dotenv import load_dotenv
 
 # Load environment variables from .env file
@@ -84,7 +85,8 @@ def get_image(title):
     response = client.images.generate(
     model="dall-e-3",
     # prompt="Make an image, do not inlude any of the words, with these vibes + " + title + " + " + generate_first_prompt(title) + " + " + generate_second_prompt(title) + " include only one picture, and pictures only.",
-    prompt="Make an image, do not inlude any of the words, with these vibes + " + generate_first_prompt(title) + " + " + generate_second_prompt(title) + " include only one picture, and pictures only.",
+    # prompt="Make an image, do not inlude any of the words, with these vibes + " + generate_first_prompt(title) + " + " + generate_second_prompt(title) + " include only one picture, and pictures only.",
+    prompt="Make me an image based on the song " + title,
     size="1024x1024",
     quality="standard",
     n=1,
@@ -94,5 +96,48 @@ def get_image(title):
         "image": image_url
     })
     
+@app.route('/lucky', methods=['GET'])
+def get_lucky():
+    random_songs = {
+        'Dancing Queen ABBA': 'Dancing_Queen.png',
+        'Umbrella Rihanna': 'Umbrella.png',
+        'Stairway to Heaven Led Zeppelin': ('Stairway_to_Heaven.png', 'Stairway_to_Heaven2.png', 'Stairway_to_Heaven3.png'),
+        'Summertime Sadness Lana Del Rey': ('Summertime_Sadness.png', 'Summertime_Sadness2.png'),
+        'Bohemian Rhapsody Queen': ('Bohemian_Rhap.png', 'Bohemian_Rhap2.png', 'Bohemian_Rhap3.png', 'Bohemian_Rhap4.png'),
+        'You Belong With Me Taylor Swift': ('You_Belong_With_Me_Taylor.png', 'You_Belong_With_Me2.png', 'You_Belong_With_Me3.png'),
+        'Watermelon Sugar Harry Styles': 'Watermelon_Sugar_Harry.png',
+        'Money Pink Floyd': 'Money.png',
+        'Stayin Alive Bee Gees': ('Stayin_Alive.png', 'Stayin_Alive2.png'),
+        'Viva La Vida Coldplay': 'Viva_La_Vida.png',
+        'Butter BTS': 'Butter.png',
+        'Chammak Chalo Akon': 'Chammak_Chalo.png',
+        'Margaritaville Jimmy Buffet': 'Margaritaville.png',
+        'Hotline Bling Drake': 'Hotline_Bling.png',
+        'Glamorous Fergie': 'Glamorous.png'
+    }
+
+    random_song = random.choice(list(random_songs.keys()))
+    random_path = random_songs[random_song]
+
+    if isinstance(random_path, tuple):
+        random_path = random.choice(random_path)
+
+    # get path
+    image_path = './images/' + random_path
+
+    return jsonify({
+        "image": random_song,
+        "title": image_path
+    })
+    # random_song = random.choice(list(random_songs.keys()))
+    # random_path = random_songs[random_song]
+
+    # return jsonify({
+    #     "image": random_song,
+    #     "title": random_path
+    # })
+
+
+
 if __name__ == "__main__":
     app.run(debug="True", port=8080)
