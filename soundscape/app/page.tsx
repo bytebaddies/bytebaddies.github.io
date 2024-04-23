@@ -5,7 +5,7 @@ import Link from 'next/link';
 import OpenAI from "openai";
 
 export default function Home() {
-  const [inputValue, setInputValue] = useState('');
+  const [inputValue, setInputValue] = useState<string>('');
   const [lyrics, setLyrics] = useState<string>('');
   const [imageUrl, setImageUrl] = useState<string>('');
 
@@ -15,7 +15,7 @@ export default function Home() {
   };
 
   const handleSearch = async () => {
-    var name:string = "http://localhost:8080/lyrics/" + inputValue; 
+    var name:string = " " + inputValue; 
     fetch(name)
       .then(response => response.json())
       .then(data => {

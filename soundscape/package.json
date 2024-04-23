@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "backend": "cd server && . /venv/bin/activate && python3 server.py"
   },
   "dependencies": {
     "again": "^0.0.1",
