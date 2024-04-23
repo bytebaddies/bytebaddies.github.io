@@ -45,7 +45,7 @@ export default function Home() {
       setTitle(data.title);
       setIsLoading(false); // Set loading to false when fetch is successful
       console.log(data.image);
-      router.push('/tada' + '?' + createQueryString('imageUrl', data.image));
+      router.push('/tada' + '?' + createQueryString('imageUrl', data.image) + '&' + createQueryString('title', data.title));
       
     } catch (error) {
       setIsLoading(false); // Set loading to false on fetch error
@@ -62,11 +62,11 @@ export default function Home() {
       const data = await response.json();
       
       console.log(data);
-      setImageUrl(data.title);
+      setImageUrl(data.image);
       setTitle(data.title);
       setIsLoading(false); // Set loading to false when fetch is successful
       console.log(data.title);
-      router.push('/tada' + '?' + createQueryString('imageUrl', data.title));
+      router.push('/tada' + '?' + createQueryString('imageUrl', data.image) + '&' + createQueryString('title', data.title));
       
     } catch (error) {
       setIsLoading(false); // Set loading to false on fetch error

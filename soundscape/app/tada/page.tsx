@@ -8,6 +8,7 @@ import { useRouter, useSearchParams } from 'next/navigation';
 export default function Loading() {
   const searchParams = useSearchParams();
   const encodedUrl = searchParams.get("imageUrl")!;
+  const title = searchParams.get("title")!;
   const router = useRouter();
 
   const handleClick = async () => {
@@ -37,6 +38,7 @@ export default function Loading() {
       </div>
 
       <img src={encodedUrl} alt="Generated Image" className='h-96 w-96 object-contain mx-auto my-auto'/>
+      <div className="text-center text-xl text-white mt-4">{title}</div>
       <button onClick={download} className="mx-auto mb-10 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded max-w-xs mt-5">
         Download
       </button>
