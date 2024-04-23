@@ -81,12 +81,10 @@ def generate_second_prompt(title):
 
 @app.route('/image/<title>', methods=['GET'])
 def get_image(title):
-    # lyrics = get_lyrics(title)
+    lyrics = get_lyrics(title)
     response = client.images.generate(
     model="dall-e-3",
-    # prompt="Make an image, do not inlude any of the words, with these vibes + " + title + " + " + generate_first_prompt(title) + " + " + generate_second_prompt(title) + " include only one picture, and pictures only.",
-    # prompt="Make an image, do not inlude any of the words, with these vibes + " + generate_first_prompt(title) + " + " + generate_second_prompt(title) + " include only one picture, and pictures only.",
-    prompt="Make me an image based on the song " + title,
+    prompt="Make an image, do not inlude any of the words, with these vibes + " + title + " + " + generate_first_prompt(title) + " + " + generate_second_prompt(title) + " include only one picture, and pictures only.",
     size="1024x1024",
     quality="standard",
     n=1,
@@ -130,15 +128,6 @@ def get_lucky():
         "image": image_path,
         "title": random_song
     })
-    # random_song = random.choice(list(random_songs.keys()))
-    # random_path = random_songs[random_song]
-
-    # return jsonify({
-    #     "image": random_song,
-    #     "title": random_path
-    # })
-
-
 
 if __name__ == "__main__":
     app.run(debug="True", port=8080)
