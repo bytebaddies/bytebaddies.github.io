@@ -93,7 +93,8 @@ def get_image(title):
     )
     image_url = response.data[0].url
     return jsonify({
-        "image": image_url
+        "image": image_url,
+        "title": title
     })
     
 @app.route('/lucky', methods=['GET'])

@@ -26,6 +26,7 @@ export default function Home() {
   const [inputValue, setInputValue] = useState('');
   const [lyrics, setLyrics] = useState<string>('');
   const [imageUrl, setImageUrl] = useState<string>('');
+  const [title, setTitle] = useState<string>('');
   const [isLoading, setIsLoading] = useState(false);
 
   const handleInputChange = (event: { target: { value: React.SetStateAction<string>; }; }) => {
@@ -41,6 +42,7 @@ export default function Home() {
       const response = await fetch(name);
       const data = await response.json();
       setImageUrl(data.image);
+      setTitle(data.title);
       setIsLoading(false); // Set loading to false when fetch is successful
       console.log(data.image);
       router.push('/tada' + '?' + createQueryString('imageUrl', data.image));
@@ -61,6 +63,7 @@ export default function Home() {
       
       console.log(data);
       setImageUrl(data.title);
+      setTitle(data.title);
       setIsLoading(false); // Set loading to false when fetch is successful
       console.log(data.title);
       router.push('/tada' + '?' + createQueryString('imageUrl', data.title));
