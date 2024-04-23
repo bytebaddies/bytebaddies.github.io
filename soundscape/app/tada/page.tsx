@@ -1,5 +1,5 @@
 "use client"
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import Image from "next/image";
 import Link from 'next/link';
 import OpenAI from "openai";
@@ -25,8 +25,8 @@ export default function Loading() {
   };
 
   return (
-    <main className="relative flex flex-col bg-[#2b2b2b] h-screen w-screen center-content" onClick={handleClick}>
-      <div className="mt-10 ml-10 justify-center items-center">
+    <main className="relative flex flex-col bg-[#2b2b2b] h-screen w-screen">
+      <div className="mt-10 ml-10 hover:cursor-pointer" onClick={handleClick}>
         <Image
           src="/soundscape-logo.png"
           alt="Soundscape Logo"
@@ -44,7 +44,7 @@ export default function Loading() {
       </button>
 
       <div className="relative flex place-items-center justify-center h-screen">
-        <Image 
+        <Image
           src="/logo.png"
           alt="Byte Baddies"
           width={100}
