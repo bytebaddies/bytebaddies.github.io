@@ -18,12 +18,15 @@ export default function Home() {
     },
     [searchParams]
   );
+  const images = (require as any).context('../public/images', true);
+
 
   // let url = new URL("http://localhost:3000/tada/");
   // let params = new URLSearchParams(url.search);
   const [inputValue, setInputValue] = useState('');
   const [lyrics, setLyrics] = useState<string>('');
   const [imageUrl, setImageUrl] = useState<string>('');
+  const [title, setTitle] = useState<string>('');
   const [isLoading, setIsLoading] = useState(false);
 
   const handleInputChange = (event: { target: { value: React.SetStateAction<string>; }; }) => {
@@ -39,9 +42,10 @@ export default function Home() {
       const response = await fetch(name);
       const data = await response.json();
       setImageUrl(data.image);
+      setTitle(data.title);
       setIsLoading(false); // Set loading to false when fetch is successful
       console.log(data.image);
-      router.push('/tada' + '?' + createQueryString('imageUrl', data.image));
+      router.push('/tada' + '?' + createQueryString('imageUrl', data.image) + '&' + createQueryString('title', data.title));
       
     } catch (error) {
       setIsLoading(false); // Set loading to false on fetch error
@@ -49,6 +53,27 @@ export default function Home() {
       // Handle error
     }
   };
+
+  const handleLucky = async () => {
+    setIsLoading(true); // Set loading to true when fetching starts
+    var name = "http://localhost:8080/lucky";
+    try {
+      const response = await fetch(name);
+      const data = await response.json();
+      
+      console.log(data);
+      setImageUrl(data.image);
+      setTitle(data.title);
+      setIsLoading(false); // Set loading to false when fetch is successful
+      console.log(data.title);
+      router.push('/tada' + '?' + createQueryString('imageUrl', data.image) + '&' + createQueryString('title', data.title));
+      
+    } catch (error) {
+      setIsLoading(false); // Set loading to false on fetch error
+      console.error('Error fetching image URL:', error);
+      // Handle error
+    }
+  }
   
   return (
     <main className="relative flex flex-col bg-[#2b2b2b] h-screen w-screen place-items-center justify-center">
@@ -76,11 +101,9 @@ export default function Home() {
             Search
           </button>
         {/* </Link> */}
-        <Link href="/loading">
-          <button className="flex justify-center h-fit font-archivo font-normal text-[#E4E2DE] bg-[#A12D1E] w-fit py-2 px-10 rounded-md" onClick={() => {handleSearch();}}>
+          <button className="flex justify-center h-fit font-archivo font-normal text-[#E4E2DE] bg-[#A12D1E] w-fit py-2 px-10 rounded-md" onClick={() => {handleLucky();}}>
             i'm feeling lucky
           </button>
-        </Link>
         </div>
       </div>
 
