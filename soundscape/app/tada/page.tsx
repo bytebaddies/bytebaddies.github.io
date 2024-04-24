@@ -26,18 +26,18 @@ export default function Loading() {
 
   return (
     <main className="relative flex flex-col bg-[#2b2b2b] h-screen w-screen">
-      <div className="mt-10 ml-10 hover:cursor-pointer" onClick={handleClick}>
+      <div className="mt-10 ml-10" >
         <Image
           src="/soundscape-logo.png"
           alt="Soundscape Logo"
           width={175}
           height={175}
-          className="m-10"
-          onClick={download}
+          className="m-10 hover:cursor-pointer"
+          onClick={handleClick}
         />
       </div>
 
-      <img src={encodedUrl} alt="Generated Image" className='h-96 w-96 object-contain mx-auto my-auto'/>
+      <img src={encodedUrl} alt="Generated Image" className='h-96 w-96 object-contain mx-auto my-auto' />
       <div className="text-center text-xl text-white mt-4">{title}</div>
       <button onClick={download} className="mx-auto mb-10 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded max-w-xs mt-5">
         Download
