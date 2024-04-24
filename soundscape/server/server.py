@@ -111,8 +111,8 @@ def get_lucky():
         'Summertime Sadness Lana Del Rey': ('Summertime_Sadness.png', 'Summertime_Sadness2.png'),
         'Umbrella Rihanna': 'Umbrella.png',
         'Viva La Vida Coldplay': 'Viva_La_Vida.png',
-        'Watermelon Sugar Harry Styles': 'Watermelon_Sugar_Harry.png',
-        'You Belong With Me Taylor Swift': ('You_Belong_With_Me_Taylor.png', 'You_Belong_With_Me2.png', 'You_Belong_With_Me3.png'),
+        'Watermelon Sugar Harry Styles': 'Watermelon_Sugar.png',
+        'You Belong With Me Taylor Swift': ('You_Belong_With_Me.png', 'You_Belong_With_Me2.png', 'You_Belong_With_Me3.png'),
     }
 
     random_song = random.choice(list(random_songs.keys()))
