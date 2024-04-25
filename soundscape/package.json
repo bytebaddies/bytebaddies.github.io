@@ -11,7 +11,8 @@
     "frontend": "npm run dev",
     "go": "concurrently \"npm run backend\" \"npm run frontend\"",
     "format": "prettier --check --ignore-path .gitignore .",
-    "format:fix": "prettier --write --ignore-path .gitignore ."
+    "format:fix": "prettier --write --ignore-path .gitignore .",
+    "setup": "npm install && cd server && . venv/bin/activate && pip install -r requirements.txt"
   },
   "dependencies": {
     "again": "^0.0.1",
