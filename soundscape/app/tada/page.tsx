@@ -1,14 +1,13 @@
 "use client"
-import React, { useEffect, useState } from 'react';
 import Image from "next/image";
-import Link from 'next/link';
-import OpenAI from "openai";
 import { useRouter, useSearchParams } from 'next/navigation';
 
 export default function Loading() {
   const searchParams = useSearchParams();
   const encodedUrl = searchParams.get("imageUrl")!;
-  const title = searchParams.get("title")!;
+  const name = searchParams.get("name")!;
+  const artist = searchParams.get("artist")!;
+  const songUrl = searchParams.get("songUrl")!;
   const router = useRouter();
 
   const handleClick = async () => {
@@ -25,8 +24,8 @@ export default function Loading() {
   };
 
   return (
-    <main className="relative flex flex-col bg-[#2b2b2b] h-screen w-screen">
-      <div className="mt-10 ml-10" >
+    <main className="flex flex-col bg-[#2b2b2b] h-screen w-screen">
+      <div className="mt-10 ml-10">
         <Image
           src="/soundscape-logo.png"
           alt="Soundscape Logo"
@@ -37,19 +36,32 @@ export default function Loading() {
         />
       </div>
 
-      <img src={encodedUrl} alt="Generated Image" className='h-96 w-96 object-contain mx-auto my-auto' />
-      <div className="text-center text-xl text-white mt-4">{title}</div>
-      <button onClick={download} className="mx-auto mb-10 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded max-w-xs mt-5">
-        Download
-      </button>
+      <div className="flex flex-col items-center">
+        <img src={encodedUrl} alt="Generated Image" className="h-96 w-96 object-contain" />
+        <h1 className="text-center text-4xl text-white mt-4">{name}</h1>
+        <div className="text-center text-xl text-white mt-4">{artist}</div>
+        <div className="text-center text-xl text-white mt-4">
+          {songUrl.startsWith("http") ? (
+            <audio autoPlay controls src={songUrl} className="w-96 mx-auto" />
+          ) : (
+            <p>Preview not available</p>
+          )}
+        </div>
+        <button
+          onClick={download}
+          className="mx-auto mb-10 p-10 text-[#E4E2DE] bg-[#A12D1E] hover:bg-[#D7C2A1] py-2 px-4 rounded max-w-xs mt-4"
+        >
+          Download
+        </button>
+      </div>
 
-      <div className="relative flex place-items-center justify-center h-screen">
+      <div className="relative flex place-items-center justify-center h-screen p-10 bg-[#2b2b2b]">
         <Image
           src="/logo.png"
           alt="Byte Baddies"
           width={100}
           height={100}
-          className="absolute inset-x-0 bottom-4 m-auto"
+          className="absolute inset-x-0 m-10"
         />
       </div>
     </main>

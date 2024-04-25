@@ -5,6 +5,7 @@ import lyricsgenius
 import os
 import random
 from dotenv import load_dotenv
+import requests
 
 # Load environment variables from .env file
 load_dotenv()
@@ -13,41 +14,30 @@ load_dotenv()
 openai_api_key = os.getenv("OPENAI_API_KEY")
 genius_api_key = os.getenv("GENIUS_API_KEY")
 
+client_id = os.getenv("SPOTIFY_CLIENT_ID")
+client_secret = os.getenv("SPOTIFY_CLIENT_SECRET")
+
+
+auth_response = requests.post("https://accounts.spotify.com/api/token", {
+    'grant_type': 'client_credentials',
+    'client_id': client_id,
+    'client_secret': client_secret,
+})
+auth_response_data = auth_response.json()
+access_token = auth_response_data['access_token']
+
 app = Flask(__name__)
 CORS(app)
 
 client = OpenAI(api_key=openai_api_key)
 
-# def get_chat_completion(prompt, model="gpt-3.5-turbo"):
-  
-#    # Creating a message as required by the API
-#    messages = [{"role": "user", "content": prompt}]
-  
-#    # Calling the ChatCompletion API
-#    response = client.chat.completions.create(
-#        model=model,
-#        messages=messages,
-#        temperature=0,
-#    )
-
-#    # Returning the extracted response
-#    return response.choices[0].message["content"]
-
-# response = get_chat_completion("Translate into Spanish: As a beginner data scientist, I'm excited to learn about OpenAI API!")
-
-# print(response)
-
-
 @app.route('/lyrics/<title>', methods=['GET'])
 def get_lyrics(title):
     genius = lyricsgenius.Genius(genius_api_key)
     song = genius.search_song(title)
-    # return jsonify({
-    #         "lyrics": song.lyrics
-    # })
     return song.lyrics
 
-# @app.route('/lyrics/<title>', methods=['GET'])
+
 def generate_first_prompt(title):
     lyrics = get_lyrics(title)
     response = client.chat.completions.create(
@@ -58,12 +48,9 @@ def generate_first_prompt(title):
             {"role": "user", "content": "Return only the most defining sentence from this set of lyrics : " + lyrics + ". Respond with only the sentence and no explanation."}
         ]
         )
-    # return jsonify({
-    #     "prompt": response.choices[0].message.content
-    # })
     return response.choices[0].message.content
 
-# @app.route('/lyrics/<title>', methods=['GET'])
+
 def generate_second_prompt(title):
     lyrics = get_lyrics(title)
     response = client.chat.completions.create(
@@ -74,9 +61,6 @@ def generate_second_prompt(title):
             {"role": "user", "content": "What is the overall mood of these lyrics : " + lyrics + ". Respond with only the mood words and no explanation."}
         ]
         )
-    # return jsonify({
-    #     "prompt": response.choices[0].message.content
-    # })
     return response.choices[0].message.content
 
 @app.route('/image/<title>', methods=['GET'])
@@ -90,10 +74,10 @@ def get_image(title):
     n=1,
     )
     image_url = response.data[0].url
-    return jsonify({
-        "image": image_url,
-        "title": title
-    })
+
+    info = get_spotify(title)
+    info["image"] = image_url
+    return jsonify(info)
     
 @app.route('/lucky', methods=['GET'])
 def get_lucky():
@@ -124,10 +108,38 @@ def get_lucky():
     # get path
     image_path = './images/' + random_path
 
-    return jsonify({
-        "image": image_path,
-        "title": random_song
+    info = get_spotify(random_song)
+    info["image"] = image_path
+
+    return jsonify(info)
+
+@app.route('/spotify/<title>', methods=['GET'])
+def get_spotify(title):
+    
+    song_response = requests.get("https://api.spotify.com/v1/search", {
+        'q': title,
+        'type': 'track',
+        'limit': 1
+    }, headers={
+        'Authorization': 'Bearer ' + access_token
     })
+
+    song_response_data = song_response.json()
+
+
+    if song_response_data['tracks']['items']:
+        track = song_response_data['tracks']['items'][0]
+        track_name = track['name']
+        artist_name = track['artists'][0]['name']
+        preview_url = track.get('preview_url', 'No preview available')
+
+        return {
+            "name": track_name,
+            "artist": artist_name,
+            "url": preview_url
+        }
+    else:
+        return {"error": "No track found"}
 
 if __name__ == "__main__":
     app.run(debug="True", port=8080)
