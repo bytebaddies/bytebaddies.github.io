@@ -1,27 +1,27 @@
-"use client"
-import Image from "next/image";
-import { useRouter, useSearchParams } from 'next/navigation';
+'use client'
+import Image from 'next/image'
+import { useRouter, useSearchParams } from 'next/navigation'
 
 export default function Loading() {
-  const searchParams = useSearchParams();
-  const encodedUrl = searchParams.get("imageUrl")!;
-  const name = searchParams.get("name")!;
-  const artist = searchParams.get("artist")!;
-  const songUrl = searchParams.get("songUrl")!;
-  const router = useRouter();
+  const searchParams = useSearchParams()
+  const encodedUrl = searchParams.get('imageUrl')!
+  const name = searchParams.get('name')!
+  const artist = searchParams.get('artist')!
+  const songUrl = searchParams.get('songUrl')!
+  const router = useRouter()
 
   const handleClick = async () => {
-    router.back();
-  };
+    router.back()
+  }
 
   const download = () => {
-    const link = document.createElement('a');
-    link.href = encodedUrl;
-    link.download = encodedUrl;
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-  };
+    const link = document.createElement('a')
+    link.href = encodedUrl
+    link.download = encodedUrl
+    document.body.appendChild(link)
+    link.click()
+    document.body.removeChild(link)
+  }
 
   return (
     <main className="flex flex-col bg-[#2b2b2b] h-screen w-screen">
@@ -37,11 +37,15 @@ export default function Loading() {
       </div>
 
       <div className="flex flex-col items-center">
-        <img src={encodedUrl} alt="Generated Image" className="h-96 w-96 object-contain" />
+        <img
+          src={encodedUrl}
+          alt="Generated Image"
+          className="h-96 w-96 object-contain"
+        />
         <h1 className="text-center text-4xl text-white mt-4">{name}</h1>
         <div className="text-center text-xl text-white mt-4">{artist}</div>
         <div className="text-center text-xl text-white mt-4">
-          {songUrl.startsWith("http") ? (
+          {songUrl.startsWith('http') ? (
             <audio autoPlay controls src={songUrl} className="w-96 mx-auto" />
           ) : (
             <p>Preview not available</p>
@@ -65,5 +69,5 @@ export default function Loading() {
         />
       </div>
     </main>
-  );
-};
+  )
+}

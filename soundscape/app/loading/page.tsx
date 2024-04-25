@@ -1,11 +1,10 @@
-"use client"
-import React, {useEffect, useState} from 'react';
-import Image from "next/image";
-import Link from 'next/link';
-import OpenAI from "openai";
+'use client'
+import React, { useEffect, useState } from 'react'
+import Image from 'next/image'
+import Link from 'next/link'
+import OpenAI from 'openai'
 
 export default function Loading() {
-  
   return (
     <main className="relative flex flex-col bg-[#2b2b2b] h-screen w-screen">
       <div className="mt-10 ml-10">
@@ -19,7 +18,7 @@ export default function Loading() {
       </div>
 
       <div className="flex items-center justify-center h-screen">
-        <Image 
+        <Image
           src="/loading.gif"
           alt="Loading"
           width={200}
@@ -29,7 +28,7 @@ export default function Loading() {
       </div>
 
       <div className="relative flex place-items-center justify-center h-screen">
-        <Image 
+        <Image
           src="/logo.png"
           alt="Byte Baddies"
           width={100}
@@ -38,6 +37,5 @@ export default function Loading() {
         />
       </div>
     </main>
-  );
-};
-
+  )
+}
